@@ -1,6 +1,8 @@
+// Registration.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/Registration.css'; 
+import { jwtDecode } from "jwt-decode";
+import '../styles/Registration.css'; // Подключаем файл стилей
 
 const Registration = () => {
   const navigate = useNavigate();
@@ -13,9 +15,13 @@ const Registration = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-
     if (token) {
-      navigate('/');
+      const decodedToken = jwtDecode(token);
+      if (decodedToken.exp * 1000 < Date.now()) {
+        localStorage.removeItem('token');
+      } else {
+        navigate('/');
+      }
     }
   }, [navigate]);
 
@@ -39,12 +45,12 @@ const Registration = () => {
       if (response.status === 201) {
         setRegistrationSuccess(true);
         setErrorMessage('');
+        localStorage.setItem('token', data.access);
+        localStorage.setItem('refreshToken', data.refresh);
       } else if (response.status === 400) {
-        // Ваш сервер вернул ошибку валидации
         setRegistrationSuccess(false);
         setErrorMessage(data.message || 'Registration failed due to validation error');
       } else {
-        // Другие ошибки
         setRegistrationSuccess(false);
         setErrorMessage('Registration failed');
       }
@@ -55,16 +61,14 @@ const Registration = () => {
     }
   };
 
-  useEffect(() => {
-    if (registrationSuccess) {
-      navigate('/login');
-    }
-  }, [registrationSuccess, navigate]);
+  if (registrationSuccess) {
+    navigate('/login');
+  }
 
   return (
     <div className="registration-container">
       <h2>Registration</h2>
-      {registrationSuccess && <p className="success-message">Registration successful!</p>}
+      {registrationSuccess && <p>Registration successful!</p>}
       {errorMessage && <p className="error-message">{errorMessage}</p>}
       <input
         type="text"

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/Login.css'; // Подключаем файл стилей
+import { jwtDecode } from 'jwt-decode'; // Обратите внимание на правильное название библиотеки
+
+import '../styles/Login.css';
 
 const Login = () => {
   const navigate = useNavigate();
-  const [credentials, setCredentials] = useState({ username: '', password: '' });
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -12,17 +15,21 @@ const Login = () => {
     const token = localStorage.getItem('token');
 
     if (token) {
-      navigate('/');
+      try {
+        const decodedToken = jwtDecode(token);
+
+        if (decodedToken.exp * 1000 < Date.now()) {
+          localStorage.removeItem('token');
+        } else {
+          navigate('/');
+        }
+      } catch (error) {
+        // Если декодирование не удалось, например, из-за некорректного токена
+        console.error('Error decoding token:', error);
+        localStorage.removeItem('token');
+      }
     }
   }, [navigate]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setCredentials((prevCredentials) => ({
-      ...prevCredentials,
-      [name]: value,
-    }));
-  };
 
   const login = async () => {
     try {
@@ -31,7 +38,10 @@ const Login = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(credentials),
+        body: JSON.stringify({
+          username,
+          password,
+        }),
       });
 
       const data = await response.json();
@@ -39,7 +49,9 @@ const Login = () => {
       if (response.status === 200) {
         setLoginSuccess(true);
         setErrorMessage('');
-        localStorage.setItem('token', data.token);
+
+        localStorage.setItem('token', data.access);
+        localStorage.setItem('refreshToken', data.refresh);
       } else {
         setLoginSuccess(false);
         setErrorMessage(data.message || 'Login failed');
@@ -58,21 +70,19 @@ const Login = () => {
   return (
     <div className="login-container">
       <h2>Login</h2>
-      {loginSuccess && <p className="success-message">Login successful!</p>}
+      {loginSuccess && <p>Login successful!</p>}
       {errorMessage && <p className="error-message">{errorMessage}</p>}
       <input
         type="text"
         placeholder="Username"
-        name="username"
-        value={credentials.username}
-        onChange={handleInputChange}
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
       />
       <input
         type="password"
         placeholder="Password"
-        name="password"
-        value={credentials.password}
-        onChange={handleInputChange}
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
       />
       <button onClick={login}>Login</button>
     </div>
