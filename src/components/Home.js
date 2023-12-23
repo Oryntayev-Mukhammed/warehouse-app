@@ -4,14 +4,6 @@ import '../styles/assets/css/fontawsom-all.min.css'
 import '../styles/assets/css/bootstrap.min.css'
 import '../styles/assets/plugins/testimonial/css/owl.carousel.min.css'
 import '../styles/assets/plugins/testimonial/css/owl.theme.min.css'
-import cloudImage1 from '../styles/assets/images/icons/001-cloud.png';
-import cloudImage2 from '../styles/assets/images/icons/002-computer.png';
-import cloudImage3 from '../styles/assets/images/icons/003-database.png';
-import cloudImage4 from '../styles/assets/images/icons/004-cloud-network.png';
-import b1Image from '../styles/assets/images/blog/b1.png';
-import b2Image from '../styles/assets/images/blog/b2.png';
-import b3Image from '../styles/assets/images/blog/b3.png';
-import { Link} from 'react-router-dom';
 import { isAuthenticated, logout } from '../utils/auth';
 import Header from './Parts/Header';
 import Banner from './Parts/Banner';
