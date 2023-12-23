@@ -18,7 +18,7 @@ const Header = ({ isLoggedIn, handleLogout }) => (
               </div>
               <div class="col-right d-none d-md-block col-md-9 pr-0">
                 <ul>
-                <li><i class="fa fa-phone"></i> +01 87878767656 </li>
+                <li><i class="fa fa-phone"></i> +7 (747) 1710-633 </li>
                 {isLoggedIn ? (
                   <>
                     <li className="green-cover">
@@ -49,12 +49,12 @@ const Header = ({ isLoggedIn, handleLogout }) => (
           </div>
           <div id="collapseExample" class="nav-col">
             <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="hosting.html">Hosting</a></li>
-              <li><a href="about_us.html">About Us</a></li>
-              <li><a href="services.html">Services</a></li>
-              <li><a href="blog.html">Blog</a></li>
-              <li><a href="contact_us.html">Contact Us</a></li>
+            <li><Link to="/" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>Главная</Link></li>
+            <li><Link to="/rules" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>Правила</Link></li>
+            <li><Link to="about_us.html" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>About Us</Link></li>
+            <li><Link to="services.html" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>Services</Link></li>
+            <li><Link to="blog.html" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>Blog</Link></li>
+            <li><Link to="contact_us.html" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>Contact Us</Link></li>
 
               <li class="lis"><i class="fa fa-shopping-cart"></i></li>
               <li class="lis"><i class="fa fa-search"></i></li>
