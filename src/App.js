@@ -6,6 +6,7 @@ import Registration from './components/Registration';
 import Login from './components/Login';
 import Logout from './components/Logout';
 import Rules from './components/rules';
+import Contact from './components/contact';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path='/logout' element={<Logout />} />
         <Route path='/rules' element={<Rules/>} />
+        <Route path='/contact' element={<Contact/>} />
       </Routes>
     </Router>
   );
