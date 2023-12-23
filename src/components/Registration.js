@@ -1,8 +1,10 @@
-// Registration.js
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from "jwt-decode";
-import '../styles/Registration.css'; // Подключаем файл стилей
+import { useNavigate, Link } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode'; // Импортируем jwtDecode
+import { isAuthenticated } from '../utils/auth';
+import { registerUser } from '../utils/api'; // Импортируем registerUser
+
+import '../styles/Registration.css';
 
 const Registration = () => {
   const navigate = useNavigate();
@@ -14,45 +16,22 @@ const Registration = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const decodedToken = jwtDecode(token);
-      if (decodedToken.exp * 1000 < Date.now()) {
-        localStorage.removeItem('token');
-      } else {
-        navigate('/');
-      }
+    if (isAuthenticated()) {
+      navigate('/');
     }
   }, [navigate]);
 
   const register = async () => {
     try {
-      const response = await fetch('http://localhost:3000/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username,
-          password,
-          name,
-          year,
-        }),
-      });
+      const result = await registerUser(username, password, name, year); // Используем registerUser для регистрации
 
-      const data = await response.json();
-
-      if (response.status === 201) {
+      if (result.success) {
         setRegistrationSuccess(true);
         setErrorMessage('');
-        localStorage.setItem('token', data.access);
-        localStorage.setItem('refreshToken', data.refresh);
-      } else if (response.status === 400) {
-        setRegistrationSuccess(false);
-        setErrorMessage(data.message || 'Registration failed due to validation error');
+        navigate('/login');
       } else {
         setRegistrationSuccess(false);
-        setErrorMessage('Registration failed');
+        setErrorMessage(result.message || 'Registration failed');
       }
     } catch (error) {
       console.error('Error during registration:', error);
@@ -60,10 +39,6 @@ const Registration = () => {
       setErrorMessage('Registration failed');
     }
   };
-
-  if (registrationSuccess) {
-    navigate('/login');
-  }
 
   return (
     <div className="registration-container">
@@ -95,6 +70,12 @@ const Registration = () => {
         onChange={(e) => setYear(e.target.value)}
       />
       <button onClick={register}>Register</button>
+      <p>
+        Уже есть аккаунт?
+        <Link to="/login" style={{ marginLeft: '5px', color: 'blue' }}>
+          Вход тут
+        </Link>
+      </p>
     </div>
   );
 };

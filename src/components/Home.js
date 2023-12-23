@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/assets/css/style.css';
 import '../styles/assets/css/fontawsom-all.min.css'
 import '../styles/assets/css/bootstrap.min.css'
@@ -13,10 +13,21 @@ import logoImage from '../styles/assets/images/logo.png';
 import b1Image from '../styles/assets/images/blog/b1.png';
 import b2Image from '../styles/assets/images/blog/b2.png';
 import b3Image from '../styles/assets/images/blog/b3.png';
-import member1Image from '../styles/assets/images/testimonial/member-01.jpg';
-import member2Image from '../styles/assets/images/testimonial/member-02.jpg';
+import { Link} from 'react-router-dom';
+import { isAuthenticated, logout } from '../utils/auth';
 
 const Home = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setIsLoggedIn(isAuthenticated());
+  }, []);
+
+  const handleLogout = () => {
+    logout();
+    setIsLoggedIn(false);
+  };
+
   return (
     <>
       {/* HTML Head Section */}
@@ -41,8 +52,31 @@ const Home = () => {
               <div class="col-right d-none d-md-block col-md-9 pr-0">
                 <ul>
                 <li><i class="fa fa-phone"></i> +01 87878767656 </li>
-                <li class="green-cover"><i class="fa fa-lock"></i> Login </li>
-                <li class="green-cover"><i class="fa fa-user-plus"></i> Sign Up </li>
+                {isLoggedIn ? (
+                  <>
+                    <li className="green-cover">
+                      <Link to="/profile" className="btn btn-primary">
+                        <i className="fa fa-user"></i> Профиль
+                      </Link>
+                    </li>
+                    <li className="green-cover">
+                      <i onClick={handleLogout} className="fa fa-sign-out" class="btn btn-danger">Выйти</i> 
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li className="green-cover">
+                      <Link to="/login" className="btn btn-primary">
+                        <i className="fa fa-lock"></i> Войти
+                      </Link>
+                    </li>
+                    <li className="green-cover">
+                      <Link to="/registration" className="btn btn-success">
+                        <i className="fa fa-user-plus"></i> Зарегистрироваться
+                      </Link>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
           </div>

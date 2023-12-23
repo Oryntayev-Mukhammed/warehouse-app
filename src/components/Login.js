@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode'; // Обратите внимание на правильное название библиотеки
+import { useNavigate, Link } from 'react-router-dom';
+import { isAuthenticated} from '../utils/auth';
+import { loginUser } from '../utils/api';
 
 import '../styles/Login.css';
 
@@ -12,60 +13,23 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      try {
-        const decodedToken = jwtDecode(token);
-
-        if (decodedToken.exp * 1000 < Date.now()) {
-          localStorage.removeItem('token');
-        } else {
-          navigate('/');
-        }
-      } catch (error) {
-        // Если декодирование не удалось, например, из-за некорректного токена
-        console.error('Error decoding token:', error);
-        localStorage.removeItem('token');
-      }
+    if (isAuthenticated()) {
+      navigate('/');
     }
   }, [navigate]);
 
   const login = async () => {
-    try {
-      const response = await fetch('http://localhost:3000/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
-      });
+    const result = await loginUser(username, password);
 
-      const data = await response.json();
-
-      if (response.status === 200) {
-        setLoginSuccess(true);
-        setErrorMessage('');
-
-        localStorage.setItem('token', data.access);
-        localStorage.setItem('refreshToken', data.refresh);
-      } else {
-        setLoginSuccess(false);
-        setErrorMessage(data.message || 'Login failed');
-      }
-    } catch (error) {
-      console.error('Error during login:', error);
+    if (result.success) {
+      setLoginSuccess(true);
+      setErrorMessage('');
+      navigate('/');
+    } else {
       setLoginSuccess(false);
-      setErrorMessage('Login failed');
+      setErrorMessage(result.message);
     }
   };
-
-  if (loginSuccess) {
-    navigate('/');
-  }
 
   return (
     <div className="login-container">
@@ -85,6 +49,12 @@ const Login = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button onClick={login}>Login</button>
+      <p>
+        Нет аккаунта? 
+        <Link to="/registration" style={{ marginLeft: '5px', color: 'blue' }}>
+          Регистрация тут
+        </Link>
+      </p>
     </div>
   );
 };
