@@ -122,3 +122,26 @@ export const getAllStorage = async () => {
     throw error;
   }
 };
+
+export const createStorage = async (data) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/storage`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('loginToken')}`,
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.status === 200) {
+      const createdStorage = await response.json();
+      return createdStorage;
+    } else {
+      throw new Error('Failed to create storage');
+    }
+  } catch (error) {
+    console.error('Error creating storage:', error);
+    throw error;
+  }
+};

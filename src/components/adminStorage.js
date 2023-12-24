@@ -1,6 +1,6 @@
 // Ваш компонент React (Storage)
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import { isAuthenticated} from '../utils/auth';
 import Header from './Parts/Header';
 import Footer from './Parts/Footer';
@@ -8,12 +8,14 @@ import Copyright from './Parts/Copyright';
 import { getAllStorage } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 import '../styles/assets/css/storage.css'
+import { Link} from 'react-router-dom';
 
 const AdminStorage = () => {
   const navigate = useNavigate();
   const [storage, setStorage] = useState(null); 
   const [searchId, setSearchId] = useState('');
   const [searchUsername, setSearchUsername] = useState('');
+  const [searchProductId, setSearchProductId] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,12 +37,17 @@ const AdminStorage = () => {
   const filteredStorage = storage?.filter((item) => {
     const matchId = searchId
       ? item._id.startsWith(searchId)
-      : true;
+      : true; 
     const matchUsername =
       searchUsername && item.owner
         ? item.owner.username.startsWith(searchUsername)
         : true; 
-    return matchId && matchUsername;
+    const matchProductId = searchProductId
+      ? item.repository.some((product) =>
+          product._id.startsWith(searchProductId)
+        )
+      : true; 
+    return matchId && matchUsername && matchProductId;
   });
 
   return (
@@ -86,6 +93,18 @@ const AdminStorage = () => {
                   onChange={(e) => setSearchUsername(e.target.value)}
                 />
               </div>
+              <div className="mb-3">
+                <label htmlFor="searchProductId" className="form-label">
+                  Поиск по ID объекта:
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="searchProductId"
+                  value={searchProductId}
+                  onChange={(e) => setSearchProductId(e.target.value)}
+                />
+              </div>
             </div>
             <div className="row blog-row mt-5">
                 {storage && (
@@ -95,10 +114,11 @@ const AdminStorage = () => {
                         <th scope="col">#</th>
                         <th scope="col">ID хранилища</th>
                         <th scope="col">Владелец</th>
-                        <th scope="col">Продукты в хранилище</th>
+                        <th scope="col">Объекты в хранилище</th>
                         <th scope="col">Объем хранилища</th>
                         <th scope="col">Максимальный вес</th>
                         <th scope="col">Максимальная размер</th>
+                        <th scope='col'>Действия</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -110,6 +130,8 @@ const AdminStorage = () => {
                             <td>
                             {storageItem.repository.map((product, productIndex) => (
                                 <div key={productIndex}>
+                                <span>Id: {product._id}</span>
+                                <br />
                                 <span>{product.name}</span>
                                 <br />
                                 <span>Описание: {product.description}</span>
@@ -120,6 +142,8 @@ const AdminStorage = () => {
                                 <br />
                                 <span>Количество: {product.count}</span>
                                 <br />
+                                <span><Link className='btn btn-link'>Сменить состояние</Link></span>
+                                <br />
                                 <span>-</span>
                                 </div>
                             ))}
@@ -127,6 +151,7 @@ const AdminStorage = () => {
                             <td>{storageItem.space}</td>
                             <td>{storageItem.maxweight}</td>
                             <td>{storageItem.maxheight}</td>
+                            <td><Link to={`/add-product/${storageItem._id}`} className="btn btn-light">Добавить продукт</Link></td>
                         </tr>
                         ))}
                     </tbody>
