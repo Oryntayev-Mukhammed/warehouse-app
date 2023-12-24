@@ -13,12 +13,23 @@ import ServicesSection from './Parts/ServicesSection';
 import BlogSection from './Parts/BlogSection';
 import Footer from './Parts/Footer';
 import Copyright from './Parts/Copyright';
+import {getUser} from '../utils/api';
 
 const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    setIsLoggedIn(isAuthenticated());
+    const checkAuth = async () => {
+      setIsLoggedIn(isAuthenticated());
+
+      if (isAuthenticated()) {
+        const userData = await getUser();
+        setUser(userData.user);
+      }
+    };
+
+    checkAuth();
   }, []);
 
   const handleLogout = () => {
@@ -37,7 +48,7 @@ const Home = () => {
 
       {/* HTML Body Section */}
       <body>
-        <Header isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+        <Header isLoggedIn={isLoggedIn} handleLogout={handleLogout} user={user}/>
 
         {/* Banner */}
         <Banner />

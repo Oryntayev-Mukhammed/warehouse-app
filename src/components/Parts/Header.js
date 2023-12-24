@@ -6,7 +6,7 @@ import '../../styles/assets/plugins/testimonial/css/owl.theme.min.css'
 import logoImage from '../../styles/assets/images/logo.png';
 import { Link} from 'react-router-dom';
 
-const Header = ({ isLoggedIn, handleLogout }) => (
+const Header = ({ isLoggedIn, handleLogout, user }) => (
     <header>
         <div class="container-fluid">
             <div class="row head-col">
@@ -19,11 +19,12 @@ const Header = ({ isLoggedIn, handleLogout }) => (
               <div class="col-right d-none d-md-block col-md-9 pr-0">
                 <ul>
                 <li><i class="fa fa-phone"></i> +7 (747) 1710-633 </li>
-                {isLoggedIn ? (
+                {isLoggedIn && user ? (
                   <>
-                    <li className="green-cover">
+                    <li className="green-cover" style={{ display: 'flex', alignItems: 'center' }}>
+                    <span style={{ marginRight: '10px', fontWeight: "bold" }}>{user.username}</span>
                       <Link to="/profile" className="btn btn-primary">
-                        <i className="fa fa-user"></i> Профиль
+                      <i className="fa fa-user"></i> Профиль
                       </Link>
                     </li>
                     <li className="green-cover">
@@ -53,8 +54,8 @@ const Header = ({ isLoggedIn, handleLogout }) => (
             <li><Link to="/rules" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>Правила</Link></li>
             <li><Link to="about_us.html" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>About Us</Link></li>
             <li><Link to="services.html" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>Services</Link></li>
-            <li><Link to="blog.html" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>Blog</Link></li>
-            <li><Link to="contact_us.html" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>Contact Us</Link></li>
+            <li><Link to="/storage" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>Хранилище</Link></li>
+            <li><Link to="/contact" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>Связаться с нами</Link></li>
 
               <li class="lis"><i class="fa fa-shopping-cart"></i></li>
               <li class="lis"><i class="fa fa-search"></i></li>

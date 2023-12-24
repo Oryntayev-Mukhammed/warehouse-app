@@ -1,6 +1,6 @@
 // api.js
 
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = 'http://localhost:3000';
 
 export const loginUser = async (username, password) => {
   try {
@@ -51,5 +51,52 @@ export const registerUser = async (username, password, name, year) => {
   } catch (error) {
     console.error('Ошибка во время регистрации:', error);
     return { success: false, message: 'Ошибка регистрации' };
+  }
+};
+
+export const getUser = async () => {
+  try {
+    const token = localStorage.getItem('loginToken');
+
+    const response = await fetch(`${API_BASE_URL}/get-user`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await response.json();
+
+    if (response.status === 200) {
+      return { success: true, user: data };
+    } else {
+      return { success: false, message: data.error || 'Ошибка получения пользователя' };
+    }
+  } catch (error) {
+    console.error('Ошибка при получении пользователя:', error);
+    return { success: false, message: 'Ошибка при получении пользователя' };
+  }
+};
+
+export const getStorage = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/storage`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('loginToken')}`,
+      },
+    });
+
+    if (response.status === 200) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error('Failed to fetch storage data');
+    }
+  } catch (error) {
+    console.error('Error fetching storage data:', error);
+    throw error;
   }
 };

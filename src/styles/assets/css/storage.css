@@ -1,0 +1,38 @@
+.file-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .file-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px 8px 0 0;
+  }
+  
+  .file-details {
+    padding: 15px;
+  }
+  
+  .file-name {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .file-description {
+    color: #555;
+    margin-bottom: 15px;
+  }
+  
+  .file-stats p {
+    font-size: 0.9rem;
+    color: #777;
+    margin: 0;
+  }
+  
+  .container {
+    margin-top: 30px;
+  }
+  
