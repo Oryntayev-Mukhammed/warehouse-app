@@ -100,3 +100,25 @@ export const getStorage = async () => {
     throw error;
   }
 };
+
+export const getAllStorage = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/storage/all`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('loginToken')}`,
+      },
+    });
+
+    if (response.status === 200) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error('Failed to fetch all storage data');
+    }
+  } catch (error) {
+    console.error('Error fetching all storage data:', error);
+    throw error;
+  }
+};

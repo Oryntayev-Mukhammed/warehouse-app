@@ -5,19 +5,21 @@ import { isAuthenticated} from '../utils/auth';
 import Header from './Parts/Header';
 import Footer from './Parts/Footer';
 import Copyright from './Parts/Copyright';
-import { getStorage } from '../utils/api';
+import { getAllStorage } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 import '../styles/assets/css/storage.css'
 
 const AdminStorage = () => {
   const navigate = useNavigate();
-  const [storage, setStorage] = useState(null);
+  const [storage, setStorage] = useState(null); 
+  const [searchId, setSearchId] = useState('');
+  const [searchUsername, setSearchUsername] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (isAuthenticated()) {
-          const storageData = await getStorage();
+          const storageData = await getAllStorage();
           setStorage(storageData);
         } else {
           navigate('/login');
@@ -29,6 +31,18 @@ const AdminStorage = () => {
 
     fetchData();
   }, [navigate]);
+
+  // Фильтрация данных на основе searchId и searchUsername
+  const filteredStorage = storage?.filter((item) => {
+    const matchId = searchId
+      ? item._id.startsWith(searchId)
+      : true; // Показывать, если searchId пуст
+    const matchUsername =
+      searchUsername && item.owner
+        ? item.owner.username.startsWith(searchUsername)
+        : true; // Показывать, если searchUsername пуст
+    return matchId && matchUsername;
+  });
 
   return (
     <>
@@ -45,38 +59,84 @@ const AdminStorage = () => {
         <div className="blog container-fluid">
           <div className="container">
             <div className="section-title row">
-              <h2>Ваше хранилище</h2>
+              <h2>Хранилища</h2>
               <p>
-                Добро пожаловать в ваше персональное хранилище. Здесь вы можете хранить, управлять и наслаждаться
-                безопасным доступом к вашим данным. Наша цель - обеспечить надежное и удобное место для хранения ваших
-                файлов и информации.
+                Панель управления
               </p>
             </div>
             <div className="row blog-row mt-5">
-            {storage &&
-              storage.repository.map((file, index) => (
-                <div className="col-md-4" key={index}>
-                  <div className="file-card">
-                    <div className="file-image">
-                      {file.photo.map((photo, photoIndex) => (
-                        <img key={photoIndex} className="img-fluid" src={`http://localhost:3000/photo/${photo}`} alt="" />
-                      ))}
-                    </div>
-                    <div className="file-details">
-                      <h4 className="file-name">{file.name}</h4>
-                      <p className="file-description">{file.description}</p>
-                      <div className="file-stats">
-                        <p>{`Количество: ${file.count}`} </p>
-                        <p>{`Вес: ${file.weight}`} кг</p>
-                        <p>{`Высота: ${file.height}`} метров</p>
-                        <p>{`Статус: ${file.status}`} </p>
-                        <p>{`Местонахождение: ${file.position}`}</p>
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+              <div className="mb-3">
+                <label htmlFor="searchId" className="form-label">
+                  Поиск по ID:
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="searchId"
+                  value={searchId}
+                  onChange={(e) => setSearchId(e.target.value)}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="searchUsername" className="form-label">
+                  Поиск по имени пользователя:
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="searchUsername"
+                  value={searchUsername}
+                  onChange={(e) => setSearchUsername(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="row blog-row mt-5">
+                {storage && (
+                    <table className="table table-bordered">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">ID хранилища</th>
+                        <th scope="col">Владелец</th>
+                        <th scope="col">Продукты в хранилище</th>
+                        <th scope="col">Объем хранилища</th>
+                        <th scope="col">Максимальный вес</th>
+                        <th scope="col">Максимальная размер</th>
+                        {/* Добавьте другие заголовки, если необходимо */}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filteredStorage.map((storageItem, index) => (
+                        <tr key={index}>
+                            <th scope="row">{index + 1}</th>
+                            <td>{storageItem._id}</td>
+                            <td>{storageItem.owner.username}</td>
+                            <td>
+                            {storageItem.repository.map((product, productIndex) => (
+                                <div key={productIndex}>
+                                <span>{product.name}</span>
+                                <br />
+                                <span>Описание: {product.description}</span>
+                                <br />
+                                <span>Статус: {product.status}</span>
+                                <br />
+                                <span>Местонахождение: {product.position}</span>
+                                <br />
+                                <span>Количество: {product.count}</span>
+                                <br />
+                                <span>-</span>
+                                </div>
+                            ))}
+                            </td>
+                            <td>{storageItem.space}</td>
+                            <td>{storageItem.maxweight}</td>
+                            <td>{storageItem.maxheight}</td>
+                            {/* Добавьте другие ячейки, если необходимо */}
+                        </tr>
+                        ))}
+                    </tbody>
+                    </table>
+                )}
             </div>
           </div>
         </div>
