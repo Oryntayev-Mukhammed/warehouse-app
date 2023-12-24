@@ -1,29 +1,22 @@
 // Ваш компонент React (Storage)
 
 import React, { useState, useEffect } from 'react';
-import { isAuthenticated, logout } from '../utils/auth';
+import { isAuthenticated} from '../utils/auth';
 import Header from './Parts/Header';
 import Footer from './Parts/Footer';
 import Copyright from './Parts/Copyright';
-import { getUser, getStorage } from '../utils/api';
+import { getStorage } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 import '../styles/assets/css/storage.css'
 
 const Storage = () => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
   const [storage, setStorage] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setIsLoggedIn(isAuthenticated());
-
         if (isAuthenticated()) {
-          const userData = await getUser();
-          setUser(userData.user);
-
           const storageData = await getStorage();
           setStorage(storageData);
         } else {
@@ -37,11 +30,6 @@ const Storage = () => {
     fetchData();
   }, [navigate]);
 
-  const handleLogout = () => {
-    logout();
-    setIsLoggedIn(false);
-  };
-
   return (
     <>
       {/* HTML Head Section */}
@@ -53,8 +41,7 @@ const Storage = () => {
 
       {/* HTML Body Section */}
       <body>
-        <Header isLoggedIn={isLoggedIn} handleLogout={handleLogout} user={user} />
-
+        <Header />
         <div className="blog container-fluid">
           <div className="container">
             <div className="section-title row">
@@ -84,6 +71,7 @@ const Storage = () => {
                         <p>{`Высота: ${file.height}`} метров</p>
                         <p>{`Статус: ${file.status}`} </p>
                         <p>{`Местонахождение: ${file.position}`}</p>
+
                       </div>
                     </div>
                   </div>

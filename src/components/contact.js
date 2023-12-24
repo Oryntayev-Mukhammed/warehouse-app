@@ -1,26 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import '../styles/assets/css/style.css';
 import '../styles/assets/css/fontawsom-all.min.css'
 import '../styles/assets/css/bootstrap.min.css'
 import '../styles/assets/plugins/testimonial/css/owl.carousel.min.css'
 import '../styles/assets/plugins/testimonial/css/owl.theme.min.css'
-import { isAuthenticated, logout } from '../utils/auth';
 import Header from './Parts/Header';
 import Footer from './Parts/Footer';
 import Copyright from './Parts/Copyright';
 
 const Contact = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    setIsLoggedIn(isAuthenticated());
-  }, []);
-
-  const handleLogout = () => {
-    logout();
-    setIsLoggedIn(false);
-  };
-
   return (
     <>
       {/* HTML Head Section */}
@@ -32,7 +20,7 @@ const Contact = () => {
 
       {/* HTML Body Section */}
       <body>
-        <Header isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+        <Header />
 
         <div style={{marginTop:'0px'}} class=" no-margin">
 

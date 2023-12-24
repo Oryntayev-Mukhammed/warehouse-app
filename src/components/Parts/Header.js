@@ -5,8 +5,36 @@ import '../../styles/assets/plugins/testimonial/css/owl.carousel.min.css'
 import '../../styles/assets/plugins/testimonial/css/owl.theme.min.css'
 import logoImage from '../../styles/assets/images/logo.png';
 import { Link} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { isAuthenticated, logout } from '../../utils/auth';
+import { getUser} from '../../utils/api';
 
-const Header = ({ isLoggedIn, handleLogout, user }) => (
+const Header = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoggedIn(isAuthenticated());
+
+        if (isAuthenticated()) {
+          const userData = await getUser();
+          setUser(userData.user);
+        } 
+      } catch (error) {
+        console.error('Ошибка при получении данных:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  const handleLogout = () => {
+    logout();
+    setIsLoggedIn(false);
+  };
+
+  return(
     <header>
         <div class="container-fluid">
             <div class="row head-col">
@@ -63,6 +91,7 @@ const Header = ({ isLoggedIn, handleLogout, user }) => (
           </div>
         </div>
         </header>
-  );
+
+)};
   
   export default Header;
