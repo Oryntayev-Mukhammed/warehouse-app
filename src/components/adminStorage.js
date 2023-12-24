@@ -32,28 +32,25 @@ const AdminStorage = () => {
     fetchData();
   }, [navigate]);
 
-  // Фильтрация данных на основе searchId и searchUsername
   const filteredStorage = storage?.filter((item) => {
     const matchId = searchId
       ? item._id.startsWith(searchId)
-      : true; // Показывать, если searchId пуст
+      : true;
     const matchUsername =
       searchUsername && item.owner
         ? item.owner.username.startsWith(searchUsername)
-        : true; // Показывать, если searchUsername пуст
+        : true; 
     return matchId && matchUsername;
   });
 
   return (
     <>
-      {/* HTML Head Section */}
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <title>Storage ET RAG</title>
       </head>
 
-      {/* HTML Body Section */}
       <body>
         <Header />
         <div className="blog container-fluid">
@@ -102,7 +99,6 @@ const AdminStorage = () => {
                         <th scope="col">Объем хранилища</th>
                         <th scope="col">Максимальный вес</th>
                         <th scope="col">Максимальная размер</th>
-                        {/* Добавьте другие заголовки, если необходимо */}
                         </tr>
                     </thead>
                     <tbody>
@@ -131,7 +127,6 @@ const AdminStorage = () => {
                             <td>{storageItem.space}</td>
                             <td>{storageItem.maxweight}</td>
                             <td>{storageItem.maxheight}</td>
-                            {/* Добавьте другие ячейки, если необходимо */}
                         </tr>
                         ))}
                     </tbody>
@@ -141,10 +136,8 @@ const AdminStorage = () => {
           </div>
         </div>
 
-        {/* Footer */}
         <Footer />
 
-        {/* Copyright */}
         <Copyright />
       </body>
     </>

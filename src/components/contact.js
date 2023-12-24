@@ -11,14 +11,12 @@ import Copyright from './Parts/Copyright';
 const Contact = () => {
   return (
     <>
-      {/* HTML Head Section */}
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <title>Storage ET RAG</title>
       </head>
 
-      {/* HTML Body Section */}
       <body>
         <Header />
 
@@ -88,10 +86,8 @@ const Contact = () => {
 
             </div>
 
-        {/* Footer */}
         <Footer />
 
-        {/* Copyright */}
         <Copyright />
       </body>
     </>

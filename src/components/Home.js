@@ -16,37 +16,27 @@ import Copyright from './Parts/Copyright';
 const Home = () => {
   return (
     <>
-      {/* HTML Head Section */}
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <title>Storage ET RAG</title>
       </head>
 
-      {/* HTML Body Section */}
       <body>
         <Header/>
 
-        {/* Banner */}
         <Banner />
 
-        {/* Plans Container */}
         <PlansContainer />
 
-        {/* Experience Section */}
         <ExperienceSection />  
 
-        {/* Services Section */}
         <ServicesSection />
 
-        {/* Blog Section */}
         <BlogSection />
 
-
-        {/* Footer */}
         <Footer />
 
-        {/* Copyright */}
         <Copyright />
       </body>
     </>

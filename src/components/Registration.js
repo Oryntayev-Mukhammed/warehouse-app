@@ -23,7 +23,7 @@ const Registration = () => {
 
   const register = async () => {
     try {
-      const result = await registerUser(username, password, name, year); // Используем registerUser для регистрации
+      const result = await registerUser(username, password, name, year);
 
       if (result.success) {
         setRegistrationSuccess(true);

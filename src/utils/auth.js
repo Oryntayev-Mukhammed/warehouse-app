@@ -22,7 +22,6 @@ export const logout = () => {
 
 export const getAuthToken = () => {
   return localStorage.getItem('loginToken');
-  console.log(isAdmin);
 };
 
 export const isAdmin = async () => {

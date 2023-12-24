@@ -40,7 +40,6 @@ const ServicesSection = () => (
           </div>
         </div>
 
-        {/* Добавьте здесь другие услуги, при необходимости */}
       </div>
     </div>
   </section>

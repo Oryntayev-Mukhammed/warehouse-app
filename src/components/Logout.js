@@ -5,10 +5,8 @@ const Logout = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Очистить токен из localStorage
     localStorage.removeItem('loginToken');
     
-    // Перенаправить пользователя на страницу логина
     navigate('/login');
   };
 

@@ -1,5 +1,3 @@
-// Ваш компонент React (Storage)
-
 import React, { useState, useEffect } from 'react';
 import { isAuthenticated} from '../utils/auth';
 import Header from './Parts/Header';
@@ -32,14 +30,12 @@ const Storage = () => {
 
   return (
     <>
-      {/* HTML Head Section */}
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <title>Storage ET RAG</title>
       </head>
 
-      {/* HTML Body Section */}
       <body>
         <Header />
         <div className="blog container-fluid">
@@ -81,10 +77,8 @@ const Storage = () => {
           </div>
         </div>
 
-        {/* Footer */}
         <Footer />
 
-        {/* Copyright */}
         <Copyright />
       </body>
     </>
