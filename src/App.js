@@ -8,6 +8,7 @@ import Logout from './components/Logout';
 import Rules from './components/rules';
 import Contact from './components/contact';
 import Storage from './components/storage';
+import AdminStorage from './components/adminStorage';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path='/rules' element={<Rules/>} />
         <Route path='/contact' element={<Contact/>} />
         <Route path='/storage' element={<Storage/>} />
+        <Route path='/adminStorage' element={<AdminStorage/>}/>
       </Routes>
     </Router>
   );

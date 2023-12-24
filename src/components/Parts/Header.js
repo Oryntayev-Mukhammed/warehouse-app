@@ -6,11 +6,12 @@ import '../../styles/assets/plugins/testimonial/css/owl.theme.min.css'
 import logoImage from '../../styles/assets/images/logo.png';
 import { Link} from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import { isAuthenticated, logout } from '../../utils/auth';
+import { isAdmin, isAuthenticated, logout } from '../../utils/auth';
 import { getUser} from '../../utils/api';
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdminState, setIsAdminState] = useState(false);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -19,6 +20,8 @@ const Header = () => {
         setIsLoggedIn(isAuthenticated());
 
         if (isAuthenticated()) {
+          const adminStatus = await isAdmin(); // Переименовали переменную
+          setIsAdminState(adminStatus); // Используем переименованную переменную
           const userData = await getUser();
           setUser(userData.user);
         } 
@@ -82,7 +85,15 @@ const Header = () => {
             <li><Link to="/rules" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>Правила</Link></li>
             <li><Link to="about_us.html" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>About Us</Link></li>
             <li><Link to="services.html" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>Services</Link></li>
-            <li><Link to="/storage" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>Хранилище</Link></li>
+            {isAdminState ? (
+                  <>
+                  <li><Link to="/adminStorage" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>Редактирование хранилища</Link></li>
+                  </> 
+                ): (
+                <>
+                <li><Link to="/storage" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>Хранилище</Link></li>
+                </>
+                )}
             <li><Link to="/contact" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>Связаться с нами</Link></li>
 
               <li class="lis"><i class="fa fa-shopping-cart"></i></li>
