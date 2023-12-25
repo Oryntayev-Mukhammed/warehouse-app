@@ -12,6 +12,8 @@ import AdminStorage from './components/adminStorage';
 import AddProductForm from './components/addProductForm';
 import Subscribes from './components/subscribes';
 import SubscribeForm from './components/subscribeForm';
+import ProductStatusForm from './components/ProductStatusForm';
+import ProductPositionForm from './components/ProductPositionForm';
  
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
         <Route path='/add-product/:storageOwnerId' element={<AddProductForm/>}/>
         <Route path='/subscribes' element={<Subscribes/>}/>
         <Route path='/subscribe/:subscribeId' element={<SubscribeForm/>}/>
+        <Route path='/productStatus/:productId' element={<ProductStatusForm/>}/>
+        <Route path='/productPosition/:productId' element={<ProductPositionForm/>}/>
       </Routes>
     </Router>
   );

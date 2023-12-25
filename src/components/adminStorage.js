@@ -142,7 +142,8 @@ const AdminStorage = () => {
                                 <br />
                                 <span>Количество: {product.count}</span>
                                 <br />
-                                <span><Link className='btn btn-link'>Сменить состояние</Link></span>
+                                <span><Link to={`/productStatus/${product._id}`} productId={product._id} className='btn btn-link'>Сменить состояние</Link></span>
+                                <span><Link to={`/productPosition/${product._id}`} productId={product._id} className='btn btn-link'>Сменить местоположение</Link></span>
                                 <br />
                                 <span>-</span>
                                 </div>

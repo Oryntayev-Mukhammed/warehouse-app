@@ -181,3 +181,59 @@ export const subscribe = async (card, date, ccv, subscribe) => {
     throw error;
   }
 };
+
+export const updateProductStatus = async (id, status) => {
+  try {
+    const token = localStorage.getItem('loginToken');
+
+    const response = await fetch(`${API_BASE_URL}/api/product/status`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ id, status }),
+    });
+
+    const data = await response.json();
+
+    if (response.status === 200) {
+      return { success: true, message: 'Product status updated successfully' };
+    } else if (response.status === 400) {
+      return { success: false, message: data || 'Invalid request for updating product status' };
+    } else {
+      throw new Error('Failed to update product status');
+    }
+  } catch (error) {
+    console.error('Error updating product status:', error);
+    throw error;
+  }
+};
+
+export const updateProductPosition = async (id, position) => {
+  try {
+    const token = localStorage.getItem('loginToken');
+
+    const response = await fetch(`${API_BASE_URL}/api/product/position`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ id, position }),
+    });
+
+    const data = await response.json();
+
+    if (response.status === 200) {
+      return { success: true, message: 'Product position updated successfully' };
+    } else if (response.status === 400) {
+      return { success: false, message: data || 'Invalid request for updating product position' };
+    } else {
+      throw new Error('Failed to update product position');
+    }
+  } catch (error) {
+    console.error('Error updating product position:', error);
+    throw error;
+  }
+};
