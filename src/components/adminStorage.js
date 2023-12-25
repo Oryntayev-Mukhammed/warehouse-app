@@ -151,7 +151,7 @@ const AdminStorage = () => {
                             <td>{storageItem.space}</td>
                             <td>{storageItem.maxweight}</td>
                             <td>{storageItem.maxheight}</td>
-                            <td><Link to={`/add-product/${storageItem._id}`} className="btn btn-light">Добавить продукт</Link></td>
+                            <td><Link to={`/add-product/${storageItem.owner._id}`} storageOwnerId={storageItem.owner._id} className='btn btn-link'>Добавить продукт</Link></td>
                         </tr>
                         ))}
                     </tbody>

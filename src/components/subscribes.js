@@ -1,12 +1,31 @@
 import React from 'react';
-import cloudImage1 from '../../styles/assets/images/icons/001-cloud.png';
-import cloudImage2 from '../../styles/assets/images/icons/002-computer.png';
-import cloudImage3 from '../../styles/assets/images/icons/003-database.png';
-import cloudImage4 from '../../styles/assets/images/icons/004-cloud-network.png';
-import { Link } from 'react-router-dom';
+import '../styles/assets/css/style.css';
+import '../styles/assets/css/fontawsom-all.min.css'
+import '../styles/assets/css/bootstrap.min.css'
+import '../styles/assets/plugins/testimonial/css/owl.carousel.min.css'
+import '../styles/assets/plugins/testimonial/css/owl.theme.min.css'
+import Header from './Parts/Header';
+import Footer from './Parts/Footer';
+import Copyright from './Parts/Copyright';
+import cloudImage1 from '../styles/assets/images/icons/001-cloud.png';
+import cloudImage2 from '../styles/assets/images/icons/002-computer.png';
+import cloudImage3 from '../styles/assets/images/icons/003-database.png';
+import cloudImage4 from '../styles/assets/images/icons/004-cloud-network.png';
+import { Link} from 'react-router-dom';
 
-const PlansContainer = () => (
-    <div class="plans-container container-fluid">
+const Subscribes = () => {
+  return (
+    <>
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>Storage ET RAG</title>
+      </head>
+
+      <body>
+        <Header />
+
+        <div class="plans-container container-fluid">
     <div class="container">
       <div class="row section-title">
       <h2>Выгодные тарифы — мы это подтвердили.</h2>
@@ -23,7 +42,7 @@ const PlansContainer = () => (
             <li>До 1 м<sup>3</sup></li>
             <li>Бесплатное перемещение в пределах одного склада</li>
             <li><h3>4 000 KZT/месяц</h3></li>
-            <li><Link to={'/subscribes'} className='btn btn-success'>Начать</Link></li>
+            <li><Link to={`/subscribe/6585e09f6849aeb0e6f861cb`} subscribeId={'6585e09f6849aeb0e6f861cb'} className='btn btn-success'>Начать</Link></li>
           </ul>
         </div>
       </div>
@@ -37,8 +56,7 @@ const PlansContainer = () => (
             <li>До 2м<sup>3</sup></li>
             <li>Бесплатное хранение и перемещение между складами</li>
             <li><h3>7 000 KZT/месяц</h3></li>
-            <li><Link to={'/subscribes'} className='btn btn-success'>Начать</Link></li>
-        </ul>
+            <li><Link to={`/subscribe/6585e09f6849aeb0e6f861cd`} subscribeId={'6585e09f6849aeb0e6f861cd'} className='btn btn-success'>Начать</Link></li>        </ul>
       </div>
     </div>
     <div class="col-md-3 plan-col">
@@ -51,8 +69,7 @@ const PlansContainer = () => (
         <li>До 5м<sup>3</sup></li>
         <li>Премиум хранение и обслуживание</li>
         <li><h3>22 000 KZT/месяц</h3></li>
-        <li><Link to={'/subscribes'} className='btn btn-success'>Начать</Link></li>
-      </ul>
+        <li><Link to={`/subscribe/6585e09f6849aeb0e6f861cf`} subscribeId={'6585e09f6849aeb0e6f861cf'} className='btn btn-success'>Начать</Link></li>      </ul>
     </div>
   </div>
   <div class="col-md-3 plan-col">
@@ -64,13 +81,18 @@ const PlansContainer = () => (
         <li>Персональный склад по вашим требованиям</li>
         <li>Персональный курьерский сервис</li>
         <li><h3>По запросу</h3></li>
-        <li><Link to={'/subscribes'} className='btn btn-success'>Начать</Link></li>
-      </ul>
+        <li><Link to={`/subscribe/6585e0a06849aeb0e6f861d1`} subscribeId={'6585e0a06849aeb0e6f861d1'} className='btn btn-success'>Начать</Link></li>      </ul>
     </div>
   </div>
   </div>
   </div>
   </div>
-);
+        <Footer />
 
-export default PlansContainer;
+        <Copyright />
+      </body>
+    </>
+  );
+};
+
+export default Subscribes;

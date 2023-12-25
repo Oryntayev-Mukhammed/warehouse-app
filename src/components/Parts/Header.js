@@ -83,8 +83,7 @@ const Header = () => {
             <ul>
             <li><Link to="/" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>Главная</Link></li>
             <li><Link to="/rules" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>Правила</Link></li>
-            <li><Link to="about_us.html" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>About Us</Link></li>
-            <li><Link to="services.html" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>Services</Link></li>
+            <li><Link to="/subscribes" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>Подписки</Link></li>
             {isAdminState ? (
                   <>
                   <li><Link to="/adminStorage" style={{ textDecoration: 'none', color: 'green' , fontSize: '16pt', fontWeight: 'bold'}}>Редактирование хранилища</Link></li>

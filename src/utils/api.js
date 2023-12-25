@@ -123,25 +123,61 @@ export const getAllStorage = async () => {
   }
 };
 
-export const createStorage = async (data) => {
+export const addProductToStorage = async (userId, productData) => {
   try {
+    const token = localStorage.getItem('loginToken');
+    if (!token) {
+      throw new Error('Authentication token is missing');
+    }
+
     const response = await fetch(`${API_BASE_URL}/api/storage`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('loginToken')}`,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        userId,
+        ...productData,
+      }),
     });
 
     if (response.status === 200) {
-      const createdStorage = await response.json();
-      return createdStorage;
+      const data = await response.json();
+      return data;
     } else {
-      throw new Error('Failed to create storage');
+      throw new Error('Failed to add product to storage');
     }
   } catch (error) {
-    console.error('Error creating storage:', error);
+    console.error('Error adding product to storage:', error);
+    throw error;
+  }
+};
+
+export const subscribe = async (card, date, ccv, subscribe) => {
+  try {
+    const token = localStorage.getItem('loginToken');
+
+    const response = await fetch(`${API_BASE_URL}/subscribe`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ card, date, ccv, subscribe }),
+    });
+
+    const data = await response.json();
+
+    if (response.status === 200) {
+      return { success: true, message: 'Подписка успешно оформлена' };
+    } else if (response.status === 400) {
+      return { success: false, message: data.missingParams || 'Ошибка валидации параметров подписки' };
+    } else {
+      throw new Error('Failed to subscribe');
+    }
+  } catch (error) {
+    console.error('Ошибка при подписке:', error);
     throw error;
   }
 };

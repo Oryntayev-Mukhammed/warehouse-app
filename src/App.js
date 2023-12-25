@@ -9,7 +9,10 @@ import Rules from './components/rules';
 import Contact from './components/contact';
 import Storage from './components/storage';
 import AdminStorage from './components/adminStorage';
-
+import AddProductForm from './components/addProductForm';
+import Subscribes from './components/subscribes';
+import SubscribeForm from './components/subscribeForm';
+ 
 function App() {
   return (
     <Router>
@@ -22,6 +25,9 @@ function App() {
         <Route path='/contact' element={<Contact/>} />
         <Route path='/storage' element={<Storage/>} />
         <Route path='/adminStorage' element={<AdminStorage/>}/>
+        <Route path='/add-product/:storageOwnerId' element={<AddProductForm/>}/>
+        <Route path='/subscribes' element={<Subscribes/>}/>
+        <Route path='/subscribe/:subscribeId' element={<SubscribeForm/>}/>
       </Routes>
     </Router>
   );

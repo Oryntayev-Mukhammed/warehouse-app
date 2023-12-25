@@ -23,12 +23,11 @@ const Footer = () => (
         <div className="col-md-4 col-sm-12 map-img">
           <h2>Контакты</h2>
           <address className="md-margin-bottom-40">
-            Ваше Складское Пространство <br/>
-            Адрес вашего склада, <br/>
-            Ваш Город, Страна <br/>
-            Телефон: +7 123 456 789 <br/>
-            Email: <a href="mailto:info@yourwarehouse.com" className="">info@yourwarehouse.com</a><br/>
-            Web: <a href="https://yourwarehouse.com/" className="">www.yourwarehouse.com</a>
+            Алматы Наурызбайский район, <br/>
+            Мкр Шугыла 341/6,<br/>
+            Корпус 5, кв 57<br/>
+            Телефон:+7 (747) 1710-633<br/>
+            Почта: <a href="mailto:info@yourwarehouse.com" className="">hinatarocklee@gmail.com</a><br/>
           </address>
         </div>
       </div>

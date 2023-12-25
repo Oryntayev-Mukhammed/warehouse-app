@@ -68,7 +68,7 @@ const Contact = () => {
                                 Мкр Шугыла 341/6,<br/>
                                 Корпус 5, кв 57<br/>
                                 Телефон:+7 (747) 1710-633<br/>
-                                Почта:support@smarteyeapps.com<br/>
+                                Почта:hinatarocklee@gmail.com<br/>
 
 
 
