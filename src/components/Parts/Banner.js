@@ -5,6 +5,7 @@ import '../../styles/assets/plugins/testimonial/css/owl.carousel.min.css'
 import '../../styles/assets/plugins/testimonial/css/owl.theme.min.css'
 import storageImage from '../../styles/assets/images/storage.png';
 import React from 'react';
+import { Link} from 'react-router-dom';
 
 const Banner = () => (
     <div class="banner-container container-fluid">
@@ -14,7 +15,7 @@ const Banner = () => (
         <p>Оптимизируйте ваши потребности в хранении с нашими надежными и эффективными решениями.</p>
         <p>Независимо от того, нужно ли вам временное хранение товаров, эффективное управление запасами или оперативную курьерскую доставку, наша команда готова обеспечить вас высококачественными и профессиональными услугами.</p>
 
-        <button className="btn btn-warning">Начать сейчас</button>
+        <Link to={'/subscribes'} className='btn btn-warning'>Начать</Link>
       </div>
       <div class="col-lg-6 pr-0 banner-image">
         <img src={storageImage} alt="" />

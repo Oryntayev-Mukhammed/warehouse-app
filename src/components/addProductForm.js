@@ -38,7 +38,7 @@ const AddProductForm = () => {
       const handleSubmit = async (e) => {
         e.preventDefault();
       
-        console.log('userId:', formData.userId);
+        // console.log('userId:', formData);
       
         try {
           const productData = new FormData();
@@ -49,8 +49,10 @@ const AddProductForm = () => {
           productData.append('height', formData.height);
           productData.append('userId', formData.userId);
 
+          console.log("Хуй", productData);
+
           // Проверяем, что formData.photo - это массив
-if (Array.isArray(formData.photo) && formData.photo.length > 0) {
+if (true) {
     // Используем первый файл из массива (предполагая, что photo - массив файлов)
     productData.append('photo', formData.photo[0]);
   } else {
